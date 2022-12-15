@@ -1,0 +1,120 @@
+{% extends 'partials/base.html' %}{% load static %} {% block title %}About{%endblock title %} 
+{% block style %}
+  <style>
+    #header-home {
+      background: url("{{img}}") no-repeat center right/cover;
+      height: 100vh;
+      color: #fff; }
+      #header-home .header-content {
+        text-align: center;
+        padding-top: 20%; }
+        #header-home .header-content h1 {
+          font-size: 4rem;
+          line-height: 1.2; 
+    }
+
+    #header-inner {
+      background: url("{{img}}") no-repeat 20% 30%/cover;
+      height: 5.5rem;
+      border-bottom: 3px solid #ffbc00; 
+    }
+  </style>
+{% endblock style %}
+{% block content %}
+<!-- Header -->
+<header id="header-inner">
+  <div class="container">
+    <nav id="main-nav">
+      <img src="{% static 'img/logo.png' %}" alt="My Portfolio" id="logo" />
+      <ul>
+        <li><a href="{% url 'home' %}">Home</a></li>
+        <li><a href="{% url 'about' %}" class="current">About</a></li>
+        <li><a href="{% url 'work' %}">Work</a></li>
+        <li><a href="{% url 'contact' %}">Contact</a></li>
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<!-- Section A: Info -->
+<section id="about-a" class="py-3">
+  <div class="container">
+    <h2 class="section-title">About Me</h2>
+    <div class="bottom-line"></div>
+    <p class="lead text-center ">{{about.heading}}</p>
+    <div class="about-info">
+      <img src="{% static 'img/yembot.png' %}" alt="" class="bio-image" />
+      <div class="bio bg-light">
+        <h4>{{about.title}}</h4>
+        <p>
+          {{about.details | linebreaks}}
+        </p>
+      </div>
+      {% for i in about.section_1.all %}
+        <a class="award-1 text-center " href="{% if i.link %}
+        {{i.link}}
+        {% else %}
+        #
+        {% endif %}">
+          <i class="fas fa-award fa-3x"></i>
+          <h3>{{i.title}}</h3>
+          <p>
+            {{i.details}}
+          </p>
+        </a>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+<!-- Section B: Progress Bars -->
+<section id="about-b" class="bg-dark py-3">
+  <div class="container">
+    <h2 class="section-title">Technical Skills</h2>
+    <div class="bottom-line"></div>
+    {% for i in about.section_2.all %}
+      <h4>{{i.skills}}:</h4>
+      <div class="progress">
+        <div style="width: {{i.level}}%"></div>
+      </div>
+    {% endfor %} 
+  </div>
+</section>
+
+<!-- Section C: Logos -->
+{% if about.section_3.all %}
+<section id="about-c" class="py-4 bg-light">
+  <div class="container">
+    <div class="about-logos">
+    {% for i in about.section_3.all %}
+      <img src="{{i.logo}}" alt="" />
+    {% endfor %}
+    </div>
+  </div>
+</section>
+{% endif %}
+
+<!-- Section D: Testimonials -->
+{% if about.section_4.all %}
+<section id="about-d" class="py-4">
+  <div class="container">
+    <h2 class="section-title">Testimonials</h2>
+    <div class="bottom-line"></div>
+    <p class="lead text-center">Take a look at what my clients say...</p>
+    <div class="testimonials">
+    {% for i in about.section_4.all %}
+      <div>
+        <p>
+          {{i.comment}}
+        </p>
+        <ul>
+          <li><img src="{{i.image}}" alt="" /></li>
+          <li>{{i.name}}</li>
+        </ul>
+      </div>
+    {% endfor %}
+    </div>
+  </div>
+</section>
+{% endif %}
+{% endblock content %}

@@ -1,0 +1,142 @@
+{% extends 'partials/base.html' %}{% load static %}{% load customtag %} {% block title %}Adekojo Adekojo{% endblock title %} 
+{% block style %}
+  <style>
+    #header-home {
+      background: url("{{home_data.showcase_image}}") no-repeat center right/cover;
+      height: 100vh;
+      color: #fff; }
+      #header-home .header-content {
+        text-align: center;
+        padding-top: 20%; }
+        #header-home .header-content h1 {
+          font-size: 4rem;
+          line-height: 1.2; 
+    }
+
+    #header-inner {
+      background: url("{{home_data.showcase_image}}") no-repeat 20% 30%/cover;
+      height: 5.5rem;
+      border-bottom: 3px solid #ffbc00; 
+    }
+  </style>
+{% endblock style %}
+{% block content %}
+
+<!-- Header -->
+<header id="header-home">
+  <div class="container">
+    <nav id="main-nav">
+      <img src="{% static 'img/logo.png' %}" alt="My Portfolio" id="logo" />
+      <ul>
+        <li><a href="{% url 'home' %}" class="current">Home</a></li>
+        <li><a href="{% url 'about' %}">About</a></li>
+        <li><a href="{% url 'work' %}">Work</a></li>
+        <li><a href="{% url 'contact' %}">Contact</a></li>
+      </ul>
+    </nav>
+    <div class="header-content">
+      <h1>
+        {{ home_data.header_content }}
+        <span
+          class="txt-type"
+          data-wait="3000"
+          data-words="{{data_set}}"
+        ></span>
+      </h1>
+      <p class="lead">{{home_data.specialize_content}}</p>
+      <a href="{% url 'work' %}" class="btn-light">View My Work</a>
+    </div>
+  </div>
+</header>
+
+<!-- Section A: Specialize -->
+<section id="home-a" class="text-center py-2">
+  <div class="container">
+    <h2 class="section-title">{{home_data.specialist_title}}</h2>
+    <div class="bottom-line"></div>
+    <p class="lead">
+      {{home_data.specialist_summary}}
+    </p>
+    <div class="specials">
+    {% for i in home_data.section_1.all %}
+    <div>       
+        <i class="{% cycle 'fas fa-file-alt fa-2x' 'fas fa-desktop fa-2x' 'fas fa-object-ungroup fa-2x' 'fas fa-thumbs-up fa-2x' %}" ></i>
+        <h3>{{i.title}}</h3>
+        <p>
+          {{i.content}}
+        </p>
+      </div>
+    {% endfor %}
+    </div>
+  </div>
+</section>
+
+<!-- Section B: Stats -->
+<section id="home-b" class="text-center py-2">
+  <div class="stats">
+  {% if home_data.client %}
+    <div>
+      <ul>
+        <li><i class="fas fa-users fa-3x"></i></li>
+        <li class="stats-title">Clients</li>
+        <li class="stats-number">{{ home_data.client }}</li>
+      </ul>
+    </div>
+  {% endif %}
+  {% if home_data.award %}
+    <div>
+      <ul>
+        <li><i class="fas fa-award fa-3x"></i></li>
+        <li class="stats-title">Awards</li>
+        <li class="stats-number">{{ home_data.award }}</li>
+      </ul>
+    </div>
+  {% endif %}
+  {% if home_data.hours_worked %}
+    <div>
+      <ul>
+        <li><i class="fas fa-hourglass-start fa-3x"></i></li>
+        <li class="stats-title">Hours Worked</li>
+        <li class="stats-number">{{ home_data.hours_worked }}</li>
+      </ul>
+    </div>
+  {% endif %}
+  {% if home_data.project_completed %}
+    <div>
+      <ul>
+        <li><i class="fas fa-code-branch fa-3x"></i></li>
+        <li class="stats-title">Projects Completed</li>
+        <li class="stats-number">{{home_data.project_completed}}</li>
+      </ul>
+    </div>
+  {% endif %}
+  </div>
+</section>
+
+<!-- Section C: Process -->
+<section id="home-c" class="text-center py-2">
+  <div class="container">
+    <h2 class="section-title">{{home_data.section_title}}</h2>
+    <div class="bottom-line"></div>
+    <p class="lead">
+      {{home_data.section_content}}
+    </p>
+    <div class="process">
+    {% for i in home_data.section_3.all %}
+    <div>
+      <i class="{% cycle 'fas fa-file-alt fa-4x process-icon my-2' 'fas fa-desktop fa-4x process-icon my-2' 'fas fa-object-ungroup fa-4x process-icon my-2' 'fas fa-thumbs-up fa-4x process-icon my-2' %} ">
+        <div class="process-step">{{ forloop.counter }}</div>
+      </i>
+      <h3>{{i.title}}</h3>
+      <p>
+          {{i.content}}
+      </p>
+    </div>
+    {% endfor %}
+    </div>
+  </div>
+</section>
+<!-- Type Effect Tutorial: https://www.youtube.com/watch?v=POX3dT-pB4E -->
+{% endblock content %} {% block script %}
+<script src="{% static 'js/typewriter.js' %}"></script>
+{% endblock script%}

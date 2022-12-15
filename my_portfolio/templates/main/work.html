@@ -1,0 +1,83 @@
+{% extends 'partials/base.html' %} {% load static %}{% block title %}Work{%endblock title %}
+{% block style %}
+  <style>
+    #header-home {
+      background: url("{{img}}") no-repeat center right/cover;
+      height: 100vh;
+      color: #fff; }
+      #header-home .header-content {
+        text-align: center;
+        padding-top: 20%; }
+        #header-home .header-content h1 {
+          font-size: 4rem;
+          line-height: 1.2; 
+    }
+
+    #header-inner {
+      background: url("{{img}}") no-repeat 20% 30%/cover;
+      height: 5.5rem;
+      border-bottom: 3px solid #ffbc00; 
+    }
+    .btn{
+      display: inline-block;
+      border: solid 1px #fff;
+      color: #fff;
+      font-size: 1.5rem;
+      width: 60%;
+      align-items: center;
+      border-radius: 10px;
+      margin-bottom: 1rem;
+      transition: all 0.4s ease-in;
+    }
+    .btn:hover{
+      background: #ccc;
+      color: #ffbc00;
+      border: none;
+    }
+  </style>
+{% endblock style %}
+{% block content %}
+<!-- Header -->
+<header id="header-inner">
+  <div class="container">
+    <nav id="main-nav">
+      <img src="{% static 'img/logo.png' %}" alt="My Portfolio" id="logo" />
+      <ul>
+        <li><a href="{% url 'home' %}">Home</a></li>
+        <li><a href="{% url 'about' %}">About</a></li>
+        <li><a href="{% url 'work' %}" class="current">Work</a></li>
+        <li><a href="{% url 'contact' %}">Contact</a></li>
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<!-- Section A: Gallery -->
+<section id="work-a" class="text-center py-3">
+  <div class="container">
+    <h2 class="section-title">My Work</h2>
+    <div class="bottom-line"></div>
+    <p class="lead">Check out some of my projects</p>
+    <div class="items">
+    {% for i in work %}
+      <div class="item">
+        <div class="item-image">
+          <img src="{{i.image}}" alt="" />
+        </div>
+        <div class="item-text">
+          <div class="item-text-wrap">
+            <p class="item-text-category">{{i.title}}</p>
+            <a href="#" class="item-text-title btn">read more</a>
+            <a href="{% if i.github_link %}{{i.github_link}}{% else %}#{% endif %}" class="item-text-title btn">view project</a>
+          </div>
+        </div>
+      </div>
+    {% empty %}
+        <h2 class="item-text-title">No Project to display for Now.</h2>
+    {% endfor %}
+    </div>
+  </div>
+</section>
+
+<!-- Footer -->
+{% endblock content %}
